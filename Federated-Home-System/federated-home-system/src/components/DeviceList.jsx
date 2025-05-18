@@ -1,14 +1,23 @@
 import React, { useState, useEffect } from 'react';
 
-const DeviceList = () => {
+const DeviceList = ({ theme }) => {
   const [devices, setDevices] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchDevices = async () => {
+      const token = localStorage.getItem("token"); // 🔐 Retrieve JWT token
+
       try {
-        const response = await fetch('http://127.0.0.1:5000/api/devices'); // Flask API endpoint
+        const response = await fetch('http://127.0.0.1:5000/api/devices', {
+          method: "GET",
+          headers: {
+            "Authorization": token,
+          },
+        });
+
         const data = await response.json();
+
         if (data.status === 'Success') {
           setDevices(data.devices);
         } else {
@@ -30,7 +39,7 @@ const DeviceList = () => {
 
   return (
     <div>
-      <table className="table table-striped">
+      <table className={`table table-striped ${theme === 'dark' ? 'table-dark' : ''}`}>
         <thead>
           <tr>
             <th>Lease Time</th>

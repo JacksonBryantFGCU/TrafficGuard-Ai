@@ -1,7 +1,7 @@
 import React from 'react';
 
-const SecurityCard = () => (
-  <div className="card mb-2">
+const SecurityCard = ({theme}) => (
+  <div className={`card mb-2 ${theme === 'dark' ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
     <div className="card-body">
       <h5>Current Network Security Overall Status <span className="badge bg-success">Secure</span></h5>
       <hr/>

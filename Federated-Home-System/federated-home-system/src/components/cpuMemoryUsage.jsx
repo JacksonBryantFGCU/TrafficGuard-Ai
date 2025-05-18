@@ -7,8 +7,16 @@ const CpuMemoryUsage = () => {
 
   useEffect(() => {
     const fetchCpuMemory = async () => {
+      const token = localStorage.getItem("token"); // 🔐 Get JWT token
+
       try {
-        const response = await fetch('http://127.0.0.1:5000/api/cpu_memory'); // Flask API endpoint
+        const response = await fetch('http://127.0.0.1:5000/api/cpu_memory', {
+          method: "GET",
+          headers: {
+            "Authorization": token,
+          },
+        });
+
         const data = await response.json();
 
         if (data.status === 'Success') {
